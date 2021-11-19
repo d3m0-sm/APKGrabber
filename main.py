@@ -1,18 +1,20 @@
 from os import popen as cmd
 import platform
 import sys
-
 grep = "grep"
 plat = platform.system()
 if plat == "Windows":
     grep = "findstr"
 try:
-   cmd("adb devices")
+    cmd("adb devices")
 except:
     print("Fatal Error: ADB is not installed")
     sys.exit()
 data_path = ""
 app = "9"
+result_path = f"/home/$USER/Downloads/"
+if plat == "Windows":
+    result_path = f"C:\\Users\\%username%\\Downloads\\"
 ac = cmd("adb devices")
 devices = ac.read().replace("List of devices attached", "")
 if "device" not in devices:
@@ -28,6 +30,6 @@ while app not in data_path:
     if app not in data_path:
         print("App not found try again")
         print("Hint: maybe try the publisher or developer\n")
-result_path = f"C:\\Users\\%username%\\Downloads\\{app}.apk"
-cmd(f"adb pull {data_path} {result_path}")
+
+cmd(f"adb pull {data_path} {result_path}{app}.apk")
 print("APK successfully stored in Downloads directory")
