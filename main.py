@@ -5,9 +5,8 @@ grep = "grep"
 plat = platform.system()
 if plat == "Windows":
     grep = "findstr"
-try:
-    cmd("adb devices")
-except:
+dv = cmd("adb devices")
+if "not found" in dv:
     print("Fatal Error: ADB is not installed")
     sys.exit()
 data_path = ""
